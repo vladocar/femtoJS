@@ -1,0 +1,30 @@
+{
+  "name": "femtojs",
+  "version": "1.0.0",
+  "description": "Really small JS (ES6) library for DOM manipulation.",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vladocar/femtoJS.git"
+  },
+  "keywords": [
+    "JavaScript",
+    "ES6",
+    "DOM",
+    "DOM",
+    "manipulation",
+    "jQuery"
+  ],
+  "author": "Vladimir Carrer <vladocar@gmail.com> (http://www.vcarrer.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vladocar/femtoJS/issues"
+  },
+  "homepage": "https://github.com/vladocar/femtoJS#readme"
+}
