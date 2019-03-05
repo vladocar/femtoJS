@@ -44,7 +44,7 @@ $("#a").on("click", function(){
 
 ```
 
-It works in all the browsers that support ES6. If you need to support older browsers take a look into my previous project <a href="https://github.com/vladocar/nanoJS">nanoJS</a>.
+It works in all the browsers that support <a href="https://caniuse.com/#search=es6">ES6</a>. If you need to support older browsers take a look into my previous project <a href="https://github.com/vladocar/nanoJS">nanoJS</a>.
 
 
 You can use direct download or:
