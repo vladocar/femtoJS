@@ -84,7 +84,9 @@ toggleClass
 
 [You can find it here some basic examples.](docs.md)
 
-[Simple demo](off-on.html)
+[Simple demo](https://vladocar.github.io/femtoJS/off-on.html)
+
+[Project](https://vladocar.github.io/femtoJS/)
 
 <h3>License</h3>
 
