@@ -86,7 +86,7 @@ toggleClass
 
 [Simple demo](https://vladocar.github.io/femtoJS/off-on.html)
 
-[Project](https://vladocar.github.io/femtoJS/)
+[Project femtoJS](https://vladocar.github.io/femtoJS/)
 
 <h3>License</h3>
 
