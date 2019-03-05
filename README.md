@@ -9,7 +9,7 @@ Really small JS (ES6) library for DOM manipulation.
 
 <p align="center"><img src="logo/femtoJS-logo.png"/></p>
 
-femtoJS is less then 20 lines of code (0.4 Kb gziped) JavaScript library for basic DOM manipulation. It has jQuery syntax and supports chaining.
+femtoJS is less then 20 lines of code (0.4 Kb gziped) JavaScript library for basic DOM manipulation. It has jQuery syntax and supports chaining. It is also modular and super easy to customize, just delete the methods you don't use. 
 
 Syntax demos:
 
@@ -20,19 +20,19 @@ $("div").css("background-color:green;").html("Hello World").addClass("new");
 Here is the core logic of this library:
 
 ```javascript
-
+/* Selector */
 var $ = (selector) => {s = document.querySelectorAll(selector); return this}
 
+/* Event handler */
 var on = (type, fn) => {for (let i of s) i.addEventListener( type, fn, false); return this}
 
+/* Methods */
 var css = (v) => {for (let i of s) i.style.cssText = i.style.cssText + v; return this}
 
 var html = (v) => {for (let i of s) i.innerHTML = v; return this}
 
 ```
-Wth 4 lines of code you have: selector engine ($), event handler (on) and css, html method.
-
-You also can do chaining and everything is modular.
+With 4 lines of code you have: selector engine ($), event handler (on) and the css, html method.
 
 ```javascript
 
