@@ -1,36 +1,23 @@
-
-var $ = (selector) => {s = document.querySelectorAll(selector); return this}
-
-var on = (type, fn) => {for (let i of s) i.addEventListener( type, fn, false); return this}
-
-var css = (v) => {for (let i of s) i.style.cssText = i.style.cssText + v; return this}
-
-var html = (v) => {for (let i of s) i.innerHTML = v; return this}
-
-var insertBefore = (v) => {for (let i of s) i.insertAdjacentHTML("beforeBegin",v); return this}
-
-var insertAfter = (v) => {for (let i of s) i.insertAdjacentHTML("afterEnd",v); return this}
-
-var insertFirst = (v) => {for (let i of s) i.insertAdjacentHTML("afterBegin",v); return this}
-
-var insertLast = (v) => {for (let i of s) i.insertAdjacentHTML("beforeEnd",v); return this}
-
-var text = (v) => {for (let i of s) i.innerText = v; return this}
-
-var addClass = (v) => {for (let i of s)  i.classList.add(v); return this}
-
-var toggleClass = (v) => {for (let i of s)  i.classList.toggle(v); return this}
-
-var removeClass = (v) => {for (let i of s)  i.classList.remove(v); return this}
-
-var empty = (v) => {for (let i of s) i.innerHTML = ""; return this}
-
-var attr = (a,v) => {for (let i of s) i.setAttribute(a, v); return this}
-
-var getAttr = (v) => {s[0].getAttribute(v); return this}
-
-var removeAttr = (v) => {for (let i of s) i.removeAttribute(v); return this}
-
-var parent = (v) => {s.forEach((val, i) => { s[i] = val.parentNode }); return this}
-
-var offset = (v) => {for (let i of s) offset = i.getBoundingClientRect(); return this}
+window.$ = function(selector) {
+	let sel = document.querySelectorAll(selector)
+	
+	return {
+		on:    (type, fn) => { for (let i of sel) i.addEventListener(type, fn, false);    return this },
+		css:          (v) => { for (let i of sel) i.style.cssText = i.style.cssText + v;  return this },
+		html:         (v) => { for (let i of sel) i.innerHTML = v;                        return this },
+		insertBefore: (v) => { for (let i of sel) i.insertAdjacentHTML("beforeBegin", v); return this },
+		insertAfter:  (v) => { for (let i of sel) i.insertAdjacentHTML('afterEnd', v);    return this },
+		insertFirst:  (v) => { for (let i of sel) i.insertAdjacentHTML('afterBegin', v);  return this },
+		insertLast:   (v) => { for (let i of sel) i.insertAdjacentHTML('beforeEnd', v);   return this },
+		text:         (v) => { for (let i of sel) i.innerText = v;                        return this },
+		addClass:     (v) => { for (let i of sel) i.classList.add(v);                     return this },
+		toggleClass:  (v) => { for (let i of sel) i.classList.toggle(v);                  return this },
+		removeClass:  (v) => { for (let i of sel) i.classList.remove(v);                  return this },
+		empty:        (v) => { for (let i of sel) i.innerHTML = "";                       return this },
+		attr:      (a, v) => { for (let i of sel) i.setAttribute(a, v);                   return this },
+		getAttr:      (v) => { sel[0].getAttribute(v);                                    return this },
+		removeAttr:   (v) => { for (let i of sel) i.removeAttribute(v);                   return this },
+		parent:       (v) => { sel.forEach((v, i) => { sel[i] = v.parentNode });          return this },
+		offset:       (v) => { for (let i of sel) offset = i.getBoundingClientRect();     return this }
+	}
+}
