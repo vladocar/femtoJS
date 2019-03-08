@@ -11,6 +11,7 @@ body {
 	-webkit-font-smoothing: antialiased;
 	color: #000;
 	background-color: #E0F2F1;
+	margin: 0 0 0 200px;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -44,21 +45,12 @@ h5, h6 {
 }
 
 a {
-	text-decoration: none;
 	color: #333;
 	line-height: 1.6;
 }
 
-a:hover {
-	text-decoration: underline;
-}
-
-i {
-	font-size: 12px;
-}
-
-ul {
-	list-style-type: none;
+a:hover, h1 > a {
+	text-decoration: none;
 }
 
 pre {
@@ -68,11 +60,11 @@ pre {
 /* sidebar is directly  taken from backbone.js*/
 #sidebar {
 	background: #fff;
+	width: 200px;
 	position: fixed;
 	top: 0;
 	left: 0;
 	bottom: 0;
-	width: 200px;
 	overflow-y: auto;
 	overflow-x: hidden;
 	padding: 15px 0 15px 15px;
@@ -80,22 +72,29 @@ pre {
 	box-shadow: 0 0 20px #ccc;
 	-webkit-box-shadow: 0 0 20px #ccc;
 	-moz-box-shadow: 0 0 20px #ccc;
+	box-sizing: border-box;
 }
 
 #links {
-	list-style-position: inside;
-	padding: 15px 0 0 0;
+	list-style-type: none;
+	padding: 0;
 	margin: 0;
 }
 
 #intro {
-	max-width: 720px;
-	margin: 20px 0 10px 240px;
+	padding: 20px 20px 0 20px;
+}
+
+#intro > h1:first-child {
+	margin: 0;
 }
 
 .l {
-	border-bottom: 1px dotted #ccc;
 	padding: 15px 0;
+}
+
+.l:not(:last-child) {
+	border-bottom: 1px dotted #ccc;
 }
 
 .argTable th, .argTable td {
