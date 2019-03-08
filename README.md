@@ -2,7 +2,7 @@
 
 [![License MIT](https://img.shields.io/badge/licence-MIT-blue.svg)](https://choosealicense.com/licenses/mit/)
 [![Gzip Size](https://img.badgesize.io/https://unpkg.com/femtojs@1.0.0/src/femtoJS.min.js?compression=gzip)](https://unpkg.com/femtojs@1.0.0/src/femtoJS.min.js)
-[![npm](https://img.shields.io/npm/v/femtojs.svg)](https://www.npmjs.com/package/femtojs)
+[![npm](https://img.shields.io/npm/v/femtojs.svg)](https://www.npmjs.com/package/femtojs) [![Join the chat at https://gitter.im/femtoJS/community](https://badges.gitter.im/femtoJS/community.svg)](https://gitter.im/femtoJS/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 
 Really small JS (ES6) library for DOM manipulation.
