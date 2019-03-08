@@ -31,6 +31,6 @@ var getAttr = (v) => {s[0].getAttribute(v); return this}
 
 var removeAttr = (v) => {for (let i of s) i.removeAttribute(v); return this}
 
-var parent = (v) => {s = [s[0].parentNode]; return this}
+var parent = (v) => {s.forEach((val, i) => { s[i] = val.parentNode }); return this}
 
 var offset = (v) => {for (let i of s) offset = i.getBoundingClientRect(); return this}
