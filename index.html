@@ -1,54 +1,574 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-<title>femtoJS - Really small JavaScript (ES6) library for DOM manipulation.</title>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<title>femtoJS - Really small JavaScript (ES6) library for DOM
+			manipulation.</title>
+		<link rel="stylesheet" href="lib/style.css">
+		<link href="lib/prism.css" rel="stylesheet" />
+		<script src="lib/prism.js"></script>
+		<script src="lib/docJS.js"></script>
+		<script src="src/femtoJS.min.js"></script>
+		<script>
+			window.addEventListener(
+				'load',
+				function() {
+					const docOrder = [
+						'$', '$.fragment', 'on', 'css', 'html', 'before',
+						'after', 'first', 'last', 'insertBefore', 'insertAfter',
+						'insertFirst', 'insertLast', 'append', 'prepend',
+						'text', 'addClass', 'toggleClass', 'removeClass',
+						'empty', 'attr', 'getAttr', 'removeAttr', 'parent',
+						'offset', 'sel'
+					]
 
-<link rel="stylesheet" href="lib/style.css">
-<link href="lib/prism.css" rel="stylesheet" />
-<script src="lib/prism.js"></script>
-<script src="lib/docJS.js"></script>
-<script src="lib/femtoJS.js"></script>
+					// LoganDark: I'm so sorry
+					const docs = {
+						$:            {
+							argOrder: ['target'],
+							argTypes: { target: 'string | HTMLElement | Array' },
+							desc:     'This is the gateway to femtoJS. This' +
+							          ' function returns a femtoJS object' +
+							          ' which all of the following methods' +
+							          ' can be called on.',
+							example:  function example() {
+								const femtoJS = $('body')
+								// this is a femtoJS object storing the `body` tag
+							}
+						},
+						'$.fragment': {
+							argOrder: [],
+							argTypes: {},
+							desc:     'Returns <code>$(document.create' +
+							          'DocumentFragment())</code>. Not all' +
+							          ' methods may be available on this' +
+							          ' object. Currently, it\'s very' +
+							          ' difficult to get this object into the' +
+							          ' DOM, even if you manage to do your' +
+							          ' work correctly.',
+							example:  function example() {
+								const frag = $.fragment()
 
+								frag.append(
+									$('<div>').css('background-color: green;')
+								)
 
-<script>
+								$('body').sel()[0].appendChild(frag.sel()[0])
+								// this hack is needed to get it into the DOM
+								// since femtoJS's methods don't use appendChild
+								// but instead insertAdjacentElement
+								// which doesn't like DocumentFragments
+							}
+						},
+						on:           {
+							argOrder: ['event', 'callback'],
+							argTypes: {
+								event:    'string',
+								callback: 'function'
+							},
+							desc:     'Subscribes to the event' +
+							          ' <code>event</code> for all objects in' +
+							          ' the selection, using' +
+							          ' <code>callback</code> as the event' +
+							          ' handler.',
+							example:  function example() {
+								$('body').on('load', function callback() {
+									console.log('I\'m loaded!')
+									// this gets logged when the page loads,
+									// obviously
+								})
+							}
+						},
+						css:          {
+							argOrder: ['css'],
+							argTypes: { css: 'string' },
+							desc:     'Adds CSS to the elements. This' +
+							          ' basically appends <code>css</code> to' +
+							          ' their <code>style</code> attributes.',
+							example:  function example() {
+								$('body').css('background-color: green;')
+								// the body's background color is now green
+							}
+						},
+						html:         {
+							argOrder: ['innerhtml'],
+							argTypes: { innerhtml: 'string' },
+							desc:     'Sets the InnerHTML of an element to' +
+							          ' the argument <code>innerhtml</code>.',
+							example:  function example() {
+								$('body').html('You\'ve Been Hacked!' +
+								               ' Please Contact Microsoft For' +
+								               ' Support At This Number:' +
+								               ' 1-XXX-XXX-XXXX' +
+								               ' Your Computer Is At Risk!')
+								// real virus
+							}
+						},
+						before:       {
+							argOrder: ['content'],
+							argTypes: {
+								content: 'string | HTMLElement | femtoJS'
+							},
+							desc:     'If <code>content</code> is a' +
+							          ' <code>string</code>, append that HTML' +
+							          ' before the start of the elements. If' +
+							          ' it\'s a <code>HTMLElement</code>,' +
+							          ' append that element before the start' +
+							          ' of the elements. If it\'s a' +
+							          ' <code>femtoJS</code> object, append' +
+							          ' everything in its selection before' +
+							          ' the start of the elements.' +
+							          ' <code>string</code> is recommended' +
+							          ' if you have more than one element in' +
+							          ' this object\'s selection.',
+							example:  function example() {
+								$('body').before('<p>Hi!</p>')
+								// creates a paragraph BEFORE the body element
+								// the paragraph is not the first element in the
+								// body, but actually comes before it, like:
+								//   ...
+								// </head>
+								// <p>Hi!</p>
+								// <body>
+								//   ...
+							}
+						},
+						after:        {
+							argOrder: ['content'],
+							argTypes: {
+								content: 'string | HTMLElement | femtoJS'
+							},
+							desc:     'If <code>content</code> is a' +
+							          ' <code>string</code>, append that HTML' +
+							          ' after the end of the elements. If' +
+							          ' it\'s a <code>HTMLElement</code>,' +
+							          ' append that element after the end of' +
+							          ' the elements. If it\'s a' +
+							          ' <code>femtoJS</code> object, append' +
+							          ' everything in its selection after the' +
+							          ' end of the elements.' +
+							          ' <code>string</code> is recommended' +
+							          ' if you have more than one element in' +
+							          ' this object\'s selection.',
+							example:  function example() {
+								$('body').before('<p>Hi!</p>')
+								// creates a paragraph AFTER the body element
+								// the paragraph is not the last element in the
+								// body, but actually comes after it, like:
+								//     ...
+								//   </body>
+								//   <p>Hi!</p>
+								// </html>
+							}
+						},
+						first:        {
+							argOrder: ['content'],
+							argTypes: {
+								content: 'string | HTMLElement | femtoJS'
+							},
+							desc:     'If <code>content</code> is a' +
+							          ' <code>string</code>, append that HTML' +
+							          ' to the beginning of the elements. If' +
+							          ' it\'s a <code>HTMLElement</code>,' +
+							          ' append that element to the beginning' +
+							          ' of the elements. If it\'s a' +
+							          ' <code>femtoJS</code> object, append' +
+							          ' everything in its selection to the' +
+							          ' beginning of the elements.' +
+							          ' <code>string</code> is recommended' +
+							          ' if you have more than one element in' +
+							          ' this object\'s selection.',
+							example:  function example() {
+								$('body').before('<p>Hi!</p>')
+								// prepends a paragraph to the body element
+								// the paragraph is now the first element in the
+								// body, like:
+								// ...
+								// <body>
+								//   <p>Hi!</p>
+								//   ...
+							}
+						},
+						last:         {
+							argOrder: ['content'],
+							argTypes: {
+								content: 'string | HTMLElement | femtoJS'
+							},
+							desc:     'If <code>content</code> is a' +
+							          ' <code>string</code>, append that HTML' +
+							          ' to the end of the elements. If' +
+							          ' it\'s a <code>HTMLElement</code>,' +
+							          ' append that element to the end of the' +
+							          ' elements. If it\'s a' +
+							          ' <code>femtoJS</code> object, append' +
+							          ' everything in its selection to the' +
+							          ' end of the elements.' +
+							          ' <code>string</code> is recommended' +
+							          ' if you have more than one element in' +
+							          ' this object\'s selection.',
+							example:  function example() {
+								$('body').before('<p>Hi!</p>')
+								// appends a paragraph to the body element
+								// the paragraph is now the last element in the
+								// body, like:
+								//     ...
+								//     <p>Hi!</p>
+								//   </body>
+								// </html>
+							}
+						},
+						insertBefore: {
+							argOrder: ['content'],
+							argTypes: { content: 'HTMLElement | femtoJS' },
+							desc:     'Move all objects in the selection to' +
+							          ' right before the start of' +
+							          ' the <code>HTMLElement</code> or the' +
+							          ' first object in the' +
+							          ' <code>femtoJS</code> object\'s' +
+							          ' selection.',
+							example:  function example() {
+								$('<p>').text('Hi!').insertBefore($('body'))
+								// creates a paragraph BEFORE the body element
+								// the paragraph is not the first element in the
+								// body, but actually comes before it, like:
+								//   ...
+								// </head>
+								// <p>Hi!</p>
+								// <body>
+								//   ...
+							}
+						},
+						insertAfter:  {
+							argOrder: ['content'],
+							argTypes: { content: 'HTMLElement | femtoJS' },
+							desc:     'Move all objects in the selection to' +
+							          ' right after the start of' +
+							          ' the <code>HTMLElement</code> or the' +
+							          ' first object in the' +
+							          ' <code>femtoJS</code> object\'s' +
+							          ' selection.',
+							example:  function example() {
+								$('<p>').text('Hi!').insertAfter($('body'))
+								// creates a paragraph AFTER the body element
+								// the paragraph is not the last element in the
+								// body, but actually comes after it, like:
+								//     ...
+								//   </body>
+								//   <p>Hi!</p>
+								// </html>
+							}
+						},
+						insertFirst:  {
+							argOrder: ['content'],
+							argTypes: { content: 'HTMLElement | femtoJS' },
+							desc:     'Move all objects in the selection to' +
+							          ' the beginning of' +
+							          ' the <code>HTMLElement</code> or the' +
+							          ' first object in the' +
+							          ' <code>femtoJS</code> object\'s' +
+							          ' selection.',
+							example:  function example() {
+								$('<p>').text('Hi!').insertFirst($('body'))
+								// prepends a paragraph to the body element
+								// the paragraph is now the first element in the
+								// body, like:
+								// ...
+								// <body>
+								//   <p>Hi!</p>
+								//   ...
+							}
+						},
+						insertLast:   {
+							argOrder: ['content'],
+							argTypes: { content: 'HTMLElement | femtoJS' },
+							desc:     'Move all objects in the selection to' +
+							          ' the end of' +
+							          ' the <code>HTMLElement</code> or the' +
+							          ' first object in the' +
+							          ' <code>femtoJS</code> object\'s' +
+							          ' selection.',
+							example:  function example() {
+								$('<p>').text('Hi!').insertLast($('body'))
+								// appends a paragraph to the body element
+								// the paragraph is now the last element in the
+								// body, like:
+								//     ...
+								//     <p>Hi!</p>
+								//   </body>
+								// </html>
+							}
+						},
+						append:       {
+							argOrder: ['content'],
+							argTypes: {
+								content: 'string | HTMLElement | femtoJS'
+							},
+							desc:     'Identical to <code>last</code>.'
+						},
+						prepend:      {
+							argOrder: ['content'],
+							argTypes: {
+								content: 'string | HTMLElement | femtoJS'
+							},
+							desc:     'Identical to <code>first</code>.'
+						},
+						text:         {
+							argOrder: ['text'],
+							argTypes: { text: 'string' },
+							desc:     'Changes the <code>innerText</code> of' +
+							          ' the selected elements to' +
+							          ' <code>text</code>.',
+							example:  function example() {
+								$('body').text('Hello, world!')
+								// the body now contains "Hello, world!"
+							}
+						},
+						addClass:     {
+							argOrder: ['class'],
+							argTypes: { class: 'string' },
+							desc:     'Adds the class <code>class</code> to' +
+							          ' all selected elements.',
+							example:  function example() {
+								$('body').addClass('js-enabled')
+								// the body element now has the `js-enabled`
+								// class
+							}
+						},
+						toggleClass:  {
+							argOrder: ['class'],
+							argTypes: { class: 'string' },
+							desc:     'Toggles the class <code>class</code>' +
+							          ' on all selected elements.',
+							example:  function example() {
+								$('input[type="checkbox"]')
+									.toggleClass('selected')
 
-function loadthisfunction(){
+								// probably bad but who knows? maybe someone out
+								// there thinks accessibility can take a hike
+								// and uses CSS classes for checkboxes
+								// ...
+								// they can also take a hike, by the way
+								// and never come back!
+							}
+						},
+						removeClass:  {
+							argOrder: ['class'],
+							argTypes: { class: 'string' },
+							desc:     'Removes the class <code>class</code>' +
+							          ' from all selected elements.',
+							example:  function example() {
+								$('body').addClass('js-disabled')
+								// the body element no longer has the
+								// `js-disabled` class
+							}
+						},
+						empty:        {
+							argOrder: [],
+							desc:     'Empties all selected elements,' +
+							          ' removing all children.',
+							example:  function example() {
+								$('body').empty()
+								// the page is now blank (unless you have stuff
+								// in the head, or your CSS is doing something
+								// weird). you happy?
+							}
+						},
+						attr:         {
+							argOrder: ['key', 'value'],
+							argTypes: {
+								key:   'string',
+								value: 'any'
+							},
+							desc:     'Sets the attribute <code>key</code> to' +
+							          ' <code>value</code>.',
+							example:  function example() {
+								$('<a>').attr('href', 'https://www.google.com')
+									.attr('target', '_blank')
+									.insertLast($('body'))
+								// creates a link that opens a new tab to Google
+								// and appends it to the body
+							}
+						},
+						getAttr:      {
+							argOrder: ['key'],
+							argTypes: { key: 'string' },
+							desc:     'Returns the content of attribute' +
+							          ' <code>key</code> on the first' +
+							          ' selected element.',
+							example:  function example() {
+								console.log($('body').getAttr('data-kdfhkk'))
+								// this makes sense to me
+							}
+						},
+						removeAttr:   {
+							argOrder: ['key'],
+							argTypes: { key: 'string' },
+							desc:     'Removes the attribute <code>key</code>' +
+							          ' from all selected elements.',
+							example:  function example() {
+								console.log($('body').removeAttr('data-kdfhkk'))
+								// nevermind, get rid of it, nobody needs this
+							}
+						},
+						parent:       {
+							argOrder: [],
+							desc:     'Replaces every element in the current' +
+							          ' selection with its parent element.',
+							example:  function example() {
+								$('body').parent()
+								// <html> element, unless your page has a weird,
+								// weird structure, in which case... what?
+							}
+						},
+						offset:       {
+							argOrder: [],
+							desc:     'Returns the' +
+							          ' <code>getBoundingClientRect</code>' +
+							          ' of the first element in the selection.',
+							example:  function example() {
+								// I gotta be honest, I don't know what use this
+								// has, so I don't have any example, but you get
+								// the idea I hope
+							}
+						},
+						sel:          {
+							argOrder: [],
+							desc:     'Returns the current selection in its' +
+							          ' entirety.',
+							example:  function example() {
+								$('div').sel() // returns all div elements
+							}
+						}
+					}
 
-  docJS(obj,"femtoJS");
+					const sidebar = $('#sidebar')
+					const links = $('<ul>')
+						.attr('id', 'links')
+						.insertLast(sidebar)
+					const funcs = $('#funcs')
 
-}
-window.addEventListener('load',loadthisfunction,false);
+					for (let key of docOrder) {
+						const doc = docs[key]
 
-</script>
+						let anchor = 'jump-to-' + key
+						let signature = key + '(' + doc.argOrder.join(', ')
+						                + ')'
 
+						if (key.charAt(0) !== '$') {
+							signature = '.' + signature
+						}
 
-</head>
-<div id="intro"><h1><a href="https://github.com/vladocar/femtoJS"><img  style="vertical-align:middle;width:128px;height:128px" src="logo/femtoJS-logo.png"/> <span> femtoJS</span></a></h1>
-<h3>Really small JavaScript (ES6) library for DOM manipulation.</h3>
-<p>femtoJS is less than <b>20 lines</b> of code (0.4 Kb compressed and gziped) JavaScript library for basic DOM manipulation. It has jQuery like syntax and supports chaining.
-</p>
+						links.append(
+							$('<li>')
+								.append($('<a>')
+									.text('- ' + signature)
+									.attr('href', '#' + anchor))
+						)
 
-<p>Because is so small and simple you can add or remove methods directly in the library, meaning is very customizable. All methods are unrelated so removing one will not affect the library in any way.
-</p>
-<p>Use this library as starting point and personalise it so it can meet your needs.
-</p>
-<p>Here are some code examples:</p>
-<pre><code class="language-js">$(".someClass").css("background-color:green;").html("Hello World");</code></pre>
+						const argTable = $('<table>')
+							.addClass('argTable')
+							.append(
+								$('<tr>')
+									.append($('<th>').text('Argument'))
+									.append($('<th>').text('Type'))
+							)
 
-<pre><code class="language-js">
-$("#a").on("click", function(){
+						for (let arg of doc.argOrder) {
+							argTable.append(
+								$('<tr>')
+									.append($('<td>').text(arg))
+									.append($('<td>').append(
+										$('<code>')
+											.addClass('language-js')
+											.text(doc.argTypes[arg]))
+									)
+							)
+						}
 
-  $("#someDiv").css("background-color:green;color:#fff;");
+						const container = $('<div>')
+							.addClass('l')
+							.attr('id', anchor)
 
-})
-</code></pre>
+						funcs.append(
+							container
+								.append($('<h3>').text(signature))
+								.append(argTable)
+								.append($('<p>')
+									.html(doc.desc.replace(
+										/<code>/g,
+										'<code class="language-js">'
+									)))
+						)
 
-<p>It works in ES6 supported browsers.</p>
-<h2 class="l" style="text-decoration: underline"><a href="https://github.com/vladocar/femtoJS"><img src="github.svg" style="width:32px;height:32"/> Download on Github  </a></h2>
+						if ('example' in doc) {
+							let lines = doc.example.toString().split('\n')
+							let funcIndent = lines[lines.length - 1].length - 1
 
-<h3> Here is the list of all the methods:</h3>
-</div>
+							for (let i = 1; i < lines.length; i++) {
+								lines[i] = lines[i].substr(funcIndent)
+							}
 
-</body>
+							let code = $('<code>').text(lines.join('\n'))
+
+							code.html(code.sel()[0].innerHTML.replace(
+								/<br\s*\/?>/g,
+								'\n'
+							))
+
+							container.append(
+								$('<pre>')
+									.addClass('language-js')
+									.append(code)
+							)
+						}
+
+						if (doc.argOrder.length === 0) {
+							argTable.remove()
+						}
+					}
+
+					Prism.highlightAll()
+				}
+			)
+		</script>
+	</head>
+	<body>
+		<div id="sidebar">
+			<h3>femtoJS</h3>
+		</div>
+		<div id="intro">
+			<h1><a href="https://github.com/vladocar/femtoJS"><img
+				style="vertical-align:middle;width:128px;height:128px"
+				src="logo/femtoJS-logo.png" /><span> femtoJS</span></a></h1>
+			<h3>Really small JavaScript (ES6) library for DOM manipulation.</h3>
+			<p>So, what is femtoJS? femtoJS is a JavaScript library for basic
+				DOM manipulation. It has a jQuery-inspired syntax and supports
+				chaining.</p>
+			<p>femtoJS is about <b>100 lines</b> of code in size, and the
+				entire library weighs in at just under 0.9kB compressed and
+				gzipped.</p>
+			<p>Because FemtoJS is so small and simple, you can add or remove
+				methods directly in the library, meaning it's very customizable.
+				All methods are unrelated, so removing one will not affect any
+				others in any way.</p>
+			<p>This library is designed to be personalized to meet your needs.
+				It's easy to modify the code to add new methods or change
+				existing ones.</p>
+			<p>Here are some code examples:</p>
+			<pre><code class="language-js">$('.someClass').css('background-color: green;').html('Hello World');</code></pre>
+			<pre><code class="language-js">$('a').on('click', function() {
+	$('#someDiv').css('background-color: green; color: #fff;');
+})</code></pre>
+			<p>It works in ES6-supporting browsers. For Internet Explorer -56346
+				support, see <a
+					href="https://github.com/vladocar/nanoJS">NanoJS</a>.
+			</p>
+			<h2 class="l" style="text-decoration: underline"><a
+				href="https://github.com/vladocar/femtoJS">
+				<img src="github.svg" style="width:32px;height:32px" />
+				Download on Github</a></h2>
+			<h3> Here is the list of all the methods:</h3>
+			<div id="funcs"></div>
+		</div>
+	</body>
 </html>
