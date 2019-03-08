@@ -97,18 +97,15 @@ const func = (() => {
 
 	$.fragment = () => $(document.createDocumentFragment())
 
-	if (typeof window !== 'undefined' &&
-	    typeof window.document !== 'undefined') {
-		window.$ = $
-	}
-
 	return $
 })
 
-if (typeof process !== 'undefined' &&
-    process.versions != null &&
-    process.versions.node != null) {
+if (typeof module === 'object' && module.exports) {
 	module.exports = func()
+} else if (typeof define === 'function' && define.amd) {
+	const singleton = func()
+
+	define('femtoJS', [], () => singleton)
 } else {
 	func()
 }
