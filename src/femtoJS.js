@@ -3,7 +3,7 @@ window.$ = function(selector) {
 	
 	return {
 		on:    (type, fn) => { for (let i of sel) i.addEventListener(type, fn, false);    return this },
-		css:          (v) => { for (let i of sel) i.style.cssText = i.style.cssText + v;  return this },
+		css:          (v) => { for (let i of sel) i.style.cssText += v;                   return this },
 		html:         (v) => { for (let i of sel) i.innerHTML = v;                        return this },
 		insertBefore: (v) => { for (let i of sel) i.insertAdjacentHTML('beforeBegin', v); return this },
 		insertAfter:  (v) => { for (let i of sel) i.insertAdjacentHTML('afterEnd', v);    return this },
