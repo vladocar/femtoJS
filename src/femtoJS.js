@@ -18,7 +18,7 @@ window.$ = function(selector) {
 		getAttr:      (v) => { sel[0].getAttribute(v);                                    return this },
 		removeAttr:   (v) => { for (let i of sel) i.removeAttribute(v);                   return this },
 		parent:       (v) => { sel.forEach((v, i) => { sel[i] = v.parentNode });          return this },
-		offset:       (v) => { for (let i of sel) offset = i.getBoundingClientRect();     return this },
+		offset:       (v) => { return sel[0].getBoundingClientRect() },
 		sel:           () => { return sel }
 	}
 }
