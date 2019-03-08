@@ -1,5 +1,5 @@
 window.$ = function(selector) {
-	let sel = document.querySelectorAll(selector)
+	let sel = [...document.querySelectorAll(selector)]
 	
 	return {
 		on:    (type, fn) => { for (let i of sel) i.addEventListener(type, fn, false);    return this },
