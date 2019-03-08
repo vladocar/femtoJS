@@ -72,7 +72,7 @@ pre {
 	top: 0;
 	left: 0;
 	bottom: 0;
-	width: 180px;
+	width: 200px;
 	overflow-y: auto;
 	overflow-x: hidden;
 	padding: 15px 0 15px 15px;
@@ -90,7 +90,7 @@ pre {
 
 #intro {
 	max-width: 720px;
-	margin: 20px 0 10px 220px;
+	margin: 20px 0 10px 240px;
 }
 
 .l {
