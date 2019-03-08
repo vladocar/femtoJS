@@ -15,7 +15,7 @@ window.$ = function(selector) {
 		removeClass:  (v) => { for (let i of sel) i.classList.remove(v);                  return this },
 		empty:        (v) => { for (let i of sel) i.innerHTML = '';                       return this },
 		attr:      (a, v) => { for (let i of sel) i.setAttribute(a, v);                   return this },
-		getAttr:      (v) => { sel[0].getAttribute(v);                                    return this },
+		getAttr:      (v) => sel[0].getAttribute(v),
 		removeAttr:   (v) => { for (let i of sel) i.removeAttribute(v);                   return this },
 		parent:       (v) => { sel.forEach((v, i) => { sel[i] = v.parentNode });          return this },
 		offset:       (v) => sel[0].getBoundingClientRect(),
