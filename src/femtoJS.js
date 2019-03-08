@@ -1,4 +1,4 @@
-(() => {
+const func = (() => {
 	let argToElements = function(src) {
 		if (typeof src === 'string') {
 			const tagName = /^<(\w+)>$/.exec(src)
@@ -97,5 +97,18 @@
 
 	$.fragment = () => $(document.createDocumentFragment())
 
-	window.$ = $
-})()
+	if (typeof window !== 'undefined' &&
+	    typeof window.document !== 'undefined') {
+		window.$ = $
+	}
+
+	return $
+})
+
+if (typeof process !== 'undefined' &&
+    process.versions != null &&
+    process.versions.node != null) {
+	module.exports = func()
+} else {
+	func()
+}
