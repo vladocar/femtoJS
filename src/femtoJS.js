@@ -107,5 +107,5 @@ if (typeof module === 'object' && module.exports) {
 
 	define('femtoJS', [], () => singleton)
 } else {
-	func()
+	window.$ = func()
 }
