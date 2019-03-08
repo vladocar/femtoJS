@@ -1,6 +1,6 @@
 {
   "name": "femtojs",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Really small JS (ES6) library for DOM manipulation.",
   "main": "index.js",
   "directories": {
