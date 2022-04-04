@@ -35,7 +35,7 @@ const func = (() => {
 				                 : e.sel()[0].insertAdjacentElement(s, j)
 				               : sel[0].insertAdjacentElement('afterend', j))
 
-				return $
+				return this
 			}
 
 		const insertAdjacent =
@@ -56,7 +56,7 @@ const func = (() => {
 					sel[0].insertAdjacentHTML(s, sOrE)
 				}
 
-				return $
+				return this
 			}
 
 		return {
