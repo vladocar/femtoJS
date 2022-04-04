@@ -1,12 +1,12 @@
 const func = (() => {
-	let argToElements = function(src) {
+	const argToElements = function(src) {
 		if (typeof src === 'string') {
 			const tagName = /^<(\w+)>$/.exec(src)
 
 			if (tagName !== null) {
 				return [document.createElement(tagName[1])]
 			} else {
-				return [...document.querySelectorAll(src)]
+				return Array.from(document.querySelectorAll(src))
 			}
 		} else if (src instanceof HTMLElement) {
 			return [src]
@@ -20,15 +20,14 @@ const func = (() => {
 			return src.sel()
 		}
 
-		throw TypeError('Expected string | HTMLElement | Array | femtoJS,' +
-		                ' got ' + typeof src)
+		throw TypeError('Expected string | HTMLElement | Array | femtoJS, got ' + typeof src)
 	}
 
 	const $ = function(...src) {
-		let sel = argToElements(src)
-		let iter = sel.forEach.bind(sel)
+		const sel = argToElements(src)
+		const iter = sel.forEach.bind(sel)
 
-		let insertToAdjacent =
+		const insertToAdjacent =
 			(s) => function(e) {
 				iter((j, i) => i === 0
 				               ? e instanceof HTMLElement
@@ -39,7 +38,7 @@ const func = (() => {
 				return this
 			}
 
-		let insertAdjacent =
+		const insertAdjacent =
 			(s) => function(sOrE) {
 				if (typeof sOrE !== 'string') {
 					if (sOrE instanceof HTMLElement) {
